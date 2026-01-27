@@ -1,5 +1,7 @@
 import { Router } from "express";
 import { SystemModel } from "../models/System.model.js";
+import jobsRouter from "./jobs.routes.js";
+
 
 const router = Router();
 
@@ -19,5 +21,6 @@ router.get("/db-check", async (_req, res, next) => {
         next(err);
     }
 });
+router.use("/jobs", jobsRouter);
 
 export default router;
