@@ -26,7 +26,15 @@ app.get("/", (_req, res) => {
     res.send("TalentGate API is running ✅");
 });
 
+console.log("Mounting routes at /api/v1", typeof routes);
+
 app.use("/api/v1", routes);
+// DEBUG: show if router exists
+console.log("✅ /api/v1 routes mounted");
+
+// DEBUG: list routes if possible
+// @ts-ignore
+console.log("ROUTES STACK:", routes?.stack?.map((l: any) => l?.route?.path).filter(Boolean));
 
 // 404 + error middleware (always at the end)
 app.use(notFound);
