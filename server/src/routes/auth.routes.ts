@@ -1,6 +1,6 @@
 import { Router } from "express";
 import bcrypt from "bcryptjs";
-import { UserModel } from "../models/User.model.js";
+import { UserModel } from "../models/user.model.js";
 import { signToken } from "../utils/jwt.js";
 
 const router = Router();

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { SystemModel } from "../models/System.model.js";
+import { SystemModel } from "../models/system.model.js";
 import jobsRouter from "./jobs.routes.js";
 import authRouter from "./auth.routes.js";
 

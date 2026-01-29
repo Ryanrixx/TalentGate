@@ -1,7 +1,9 @@
 import { Router } from "express";
-import { SystemModel } from "./models/System.model.js";
+import { SystemModel } from "./models/system.model.js";
 import jobsRouter from "./routes/jobs.routes.js";
 import authRouter from "./routes/auth.routes.js";
+import { requireAuth } from "./middleware/requireAuth.js";
+
 
 const router = Router();
 
@@ -13,6 +15,10 @@ router.get("/health", (_req, res) => {
         ts: new Date().toISOString(),
     });
 });
+router.get("/me", requireAuth, (req: any, res) => {
+    res.json({ ok: true, auth: req.auth });
+});
+
 
 // Auth
 router.use("/auth", authRouter);
