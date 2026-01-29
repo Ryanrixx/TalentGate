@@ -1,7 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import SignIn from "./pages/SignIn";
-import CreateAccount from "./pages/CreateAccount";
+import SignIn from "./pages/SignIn.tsx";
+import CreateAccount from "./pages/CreateAccount.tsx";
+import EmployerDashboard from "./pages/EmployerDashboard.tsx";
+import JobseekerDashboard from "./pages/JobseekerDashboard.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 export default function App() {
     return (
@@ -10,6 +13,24 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<CreateAccount />} />
+
+                <Route
+                    path="/jobseeker"
+                    element={
+                        <ProtectedRoute role="jobseeker">
+                            <JobseekerDashboard />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/employer"
+                    element={
+                        <ProtectedRoute role="employer">
+                            <EmployerDashboard />
+                        </ProtectedRoute>
+                    }
+                />
             </Routes>
         </BrowserRouter>
     );
