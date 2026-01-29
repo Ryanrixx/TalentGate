@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthShell from "../components/AuthShell";
+import AuthShell from "../components/AuthShell.tsx";
+import { useNavigate } from "react-router-dom";
+import { apiPost } from "../lib/api";
+import { saveAuth, type AuthResponse } from "../lib/auth";
 
 export default function SignIn() {
     const [email, setEmail] = useState("");
@@ -8,6 +11,7 @@ export default function SignIn() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -15,13 +19,16 @@ export default function SignIn() {
         setLoading(true);
 
         try {
-            // Backend will be connected later (Phase: server auth)
-            await new Promise((r) => setTimeout(r, 500));
-            alert("Frontend works ✅ (backend auth next)");
+            const data = await apiPost<AuthResponse, { email: string; password: string }>(
+                "/auth/login",
+                { email, password }
+            );
+
+            saveAuth(data.token, data.user);
+
+            navigate(data.user.role === "employer" ? "/employer" : "/jobseeker");
         } catch (err: any) {
-            setError(err?.message || "Something went wrong");
-        } finally {
-            setLoading(false);
+            setError(err?.message || "Login failed");
         }
     }
 

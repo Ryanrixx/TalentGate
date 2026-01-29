@@ -3,7 +3,7 @@ import Home from "./pages/Home";
 import SignIn from "./pages/SignIn.tsx";
 import CreateAccount from "./pages/CreateAccount.tsx";
 import EmployerDashboard from "./pages/EmployerDashboard.tsx";
-import JobseekerDashboard from "./pages/JobseekerDashboard.tsx";
+import JobseekerDashboard from "./pages/JobSeekerDashboard.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 export default function App() {

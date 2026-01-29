@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import AuthShell from "../components/AuthShell";
+import AuthShell from "../components/AuthShell.tsx";
+import { useNavigate } from "react-router-dom";
+import { apiPost } from "../lib/api";
+import { saveAuth, type AuthResponse } from "../lib/auth";
 
 type Role = "jobseeker" | "employer";
 
@@ -12,6 +15,7 @@ export default function CreateAccount() {
 
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const navigate = useNavigate();
 
     async function onSubmit(e: React.FormEvent) {
         e.preventDefault();
@@ -19,13 +23,17 @@ export default function CreateAccount() {
         setLoading(true);
 
         try {
-            // Backend will be connected later (Phase: server auth)
-            await new Promise((r) => setTimeout(r, 500));
-            alert(`Frontend works ✅ (role: ${role}) — backend signup next`);
+            const data = await apiPost<AuthResponse, { role: Role; name: string; email: string; password: string }>(
+                "/auth/signup",
+                { role, name, email, password }
+            );
+
+            saveAuth(data.token, data.user);
+
+            // Temporary redirects (we'll create real dashboards later)
+            navigate(data.user.role === "employer" ? "/employer" : "/jobseeker");
         } catch (err: any) {
-            setError(err?.message || "Something went wrong");
-        } finally {
-            setLoading(false);
+            setError(err?.message || "Signup failed");
         }
     }
 
@@ -49,7 +57,7 @@ export default function CreateAccount() {
                         onChange={(e) => setName(e.target.value)}
                         type="text"
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm outline-none focus:border-zinc-600"
+                        className="input"
                         placeholder={role === "employer" ? "Corta, TalentGate Labs..." : "Ryan Rixx"}
                     />
                 </Field>
@@ -60,7 +68,7 @@ export default function CreateAccount() {
                         onChange={(e) => setEmail(e.target.value)}
                         type="email"
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm outline-none focus:border-zinc-600"
+                        className="input"
                         placeholder="you@example.com"
                     />
                 </Field>
@@ -71,7 +79,7 @@ export default function CreateAccount() {
                         onChange={(e) => setPassword(e.target.value)}
                         type="password"
                         required
-                        className="w-full rounded-xl border border-zinc-800 bg-zinc-950/40 px-4 py-3 text-sm outline-none focus:border-zinc-600"
+                        className="input"
                         placeholder="Create a strong password"
                     />
                 </Field>
@@ -84,7 +92,7 @@ export default function CreateAccount() {
 
                 <button
                     disabled={loading}
-                    className="w-full rounded-xl bg-white px-4 py-3 text-sm font-medium text-zinc-950 hover:opacity-90 disabled:opacity-60"
+                    className="btn btn-primary w-full py-3 disabled:opacity-60"
                 >
                     {loading ? "Creating..." : "Create account"}
                 </button>
@@ -123,7 +131,7 @@ function RoleBtn({
             type="button"
             onClick={onClick}
             className={[
-                "rounded-xl px-4 py-3 text-sm font-medium transition",
+                "btn btn-primary w-full py-3 disabled:opacity-60",
                 active ? "bg-white text-zinc-950" : "bg-zinc-950/40 text-zinc-200 hover:bg-zinc-900/60",
             ].join(" ")}
         >
