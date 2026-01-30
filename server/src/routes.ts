@@ -3,6 +3,7 @@ import { SystemModel } from "./models/system.model.js";
 import jobsRouter from "./routes/jobs.routes.js";
 import authRouter from "./routes/auth.routes.js";
 import { requireAuth } from "./middleware/requireAuth.js";
+import devRouter from "./routes/dev.routes.js";
 
 
 const router = Router();
@@ -16,14 +17,14 @@ router.get("/health", (_req, res) => {
     });
 });
 router.get("/me", requireAuth, (req: any, res) => {
-    res.json({ ok: true, auth: req.auth });
+    res.json({ ok: true, user: req.user });
 });
 
 
 // Auth
 router.use("/auth", authRouter);
 
-// DB sanity check (optional)
+// DB sanity check
 router.get("/db-check", async (_req, res, next) => {
     try {
         const doc = await SystemModel.create({ name: "talentgate" });
@@ -33,7 +34,12 @@ router.get("/db-check", async (_req, res, next) => {
     }
 });
 
-// Jobs
+if (process.env.NODE_ENV !== "production") {
+    router.use("/dev", devRouter);
+}
+
+// Jobs route
 router.use("/jobs", jobsRouter);
+
 
 export default router;

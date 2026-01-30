@@ -5,6 +5,7 @@ import CreateAccount from "./pages/CreateAccount.tsx";
 import EmployerDashboard from "./pages/EmployerDashboard.tsx";
 import JobseekerDashboard from "./pages/JobSeekerDashboard.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Jobs from "./pages/Jobs";
 
 export default function App() {
     return (
@@ -13,6 +14,7 @@ export default function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/signin" element={<SignIn />} />
                 <Route path="/signup" element={<CreateAccount />} />
+                <Route path="/jobs" element={<Jobs />} />
 
                 <Route
                     path="/jobseeker"
