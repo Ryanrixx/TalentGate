@@ -6,6 +6,7 @@ pnpm-debug.log*
 .env
 .env.*
 !.env.example
+.idea
 
 dist/
 build/
@@ -24,3 +25,10 @@ temp/
 
 uploads/
 private/
+
+.idea/
+.DS_Store
+node_modules/
+dist/
+.env
+.env.*
