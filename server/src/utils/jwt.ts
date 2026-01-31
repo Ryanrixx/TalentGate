@@ -1,13 +1,16 @@
 import jwt from "jsonwebtoken";
+import { ENV } from "../config/env";
 
-export function signToken(payload: object) {
-    const secret = process.env.JWT_SECRET;
-    if (!secret) {
-        throw new Error("JWT_SECRET not configured");
-    }
+export type JwtPayload = {
+    userId: string;
+    role: "jobseeker" | "employer";
+    verified: boolean;
+};
 
-    const token = jwt.sign(payload, secret, {
-        expiresIn: "7d",
-    });
+export function signToken(payload: JwtPayload) {
+    return jwt.sign(payload, ENV.JWT_SECRET, { expiresIn: "7d" });
+}
 
+export function verifyToken(token: string): JwtPayload {
+    return jwt.verify(token, ENV.JWT_SECRET) as JwtPayload;
 }

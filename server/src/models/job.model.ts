@@ -1,26 +1,15 @@
-import { Schema, model, type InferSchemaType } from "mongoose";
+import mongoose from "mongoose";
 
-const jobSchema = new Schema(
+const JobSchema = new mongoose.Schema(
     {
-        title: { type: String, required: true, trim: true },
-        company: { type: String, required: true, trim: true },
-        location: { type: String, default: "Remote", trim: true },
-
-        type: {
-            type: String,
-            enum: ["full-time", "part-time", "internship", "contract"],
-            default: "full-time",
-        },
-
-        tags: { type: [String], default: [] },
-
+        employerUserId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+        title: { type: String, required: true },
+        companyName: { type: String, required: true },
+        location: { type: String, required: true },
+        type: { type: String, enum: ["full-time", "part-time", "internship", "contract"], required: true },
         description: { type: String, required: true },
-        requirements: { type: [String], default: [] },
-
-        createdBy: { type: Schema.Types.ObjectId, ref: "User", required: false },
     },
     { timestamps: true }
 );
 
-export type JobDoc = InferSchemaType<typeof jobSchema>;
-export const JobModel = model("Job", jobSchema);
+export const Job = mongoose.model("Job", JobSchema);
