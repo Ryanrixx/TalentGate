@@ -1,8 +1,8 @@
 # TalentGate
 
-**TalentGate** is a production-grade hiring platform where job seekers maintain a single evolving profile and employers review candidates efficiently using role-based dashboards and swipe-style workflows.
+**TalentGate** is a production-grade hiring platform where **job seekers maintain a single evolving profile** and **employers hire faster** using role-based dashboards and (soon) swipe-style review workflows.
 
-The platform is designed to reduce application friction, speed up hiring decisions, and introduce AI-assisted matching — while keeping humans in control.
+The goal: **reduce application friction**, **speed up hiring decisions**, and introduce **AI-assisted matching** — while keeping humans in control.
 
 ---
 
@@ -10,37 +10,51 @@ The platform is designed to reduce application friction, speed up hiring decisio
 
 🟢 **Actively in development**
 
-**Completed milestones:**
+### ✅ Completed milestones
 - JWT-based authentication (signup / login)
 - Role-based access (Job Seeker / Employer)
 - Protected routes & dashboards
 - MongoDB-backed backend with Express
 - Clean, responsive frontend with React + Tailwind
 - API health checks & structured routing
+- **Verification gate (read-only until verified)** *(core platform rule)*
 
-**Next milestone:**
+### 🎯 Next milestones
 - Jobs API (CRUD)
 - Job listings page
 - Apply-to-job workflow
+- Employer job posting + applicant viewing
+- Living profile expansion (education / experience / resumes)
 
 ---
 
 ## 🧠 Core Concepts
 
-### One Living Profile (Job Seekers)
+### 1) One Living Profile (Job Seekers)
 - Identity, resume, and application data stored once
-- Apply to multiple jobs without rewriting basics
-- Resume versions per role (planned)
+- Apply to multiple jobs without rewriting the basics
+- Resume versions per role *(planned)*
+- ATS score + AI resume improvements *(planned)*
 
-### Recruiter Review Workflow
+### 2) Verification Gate (Both Roles)
+After signup:
+- **Not verified → browse only (read-only)**
+- **Verified → full access** (apply/post/interact)
+
+Verification includes:
+- Name, age, email, phone  
+Future goal: **one account per person/company**
+
+### 3) Recruiter Review Workflow (Employers)
 - Role-based employer dashboard
-- Candidate review with clear qualification signals
-- Benchmark-based shortlisting (planned)
+- Applicant review with clear qualification signals
+- Benchmark-based shortlisting *(planned)*
+- Swipe review (shortlist/reject) *(planned)*
 
-### AI-Assisted (Upcoming)
+### 4) AI-Assisted (Upcoming)
 - Resume ATS analysis
 - Job–candidate fit signals
-- Explainable recommendations (AI assists, humans decide)
+- Explainable recommendations (**AI assists, humans decide**)
 
 ---
 
@@ -65,19 +79,19 @@ The platform is designed to reduce application friction, speed up hiring decisio
 ---
 
 ## 🔐 Authentication Overview
-
 - JWT-based authentication
 - Tokens stored client-side
 - Role-based route protection
-- Separate dashboards for job seekers and employers
+- Verification gating (unverified users are read-only)
+- Separate seeker/employer dashboards
 
 ---
 
 ## 📦 Local Setup
 
 ### Prerequisites
-- Node.js (v18+)
-- MongoDD
+- Node.js (v18+ recommended)
+- MongoDB (local or Atlas)
 
 ### Backend
 ```
@@ -85,12 +99,14 @@ cd server
 npm install
 npm run dev
 ```
+
 ### Frontend
 ```
 cd client
 npm install
 npm run dev
 ```
+---
 
 ## 📜 License
 
@@ -101,27 +117,32 @@ The source code is provided for viewing and educational purposes only.
 
 You may not use, copy, modify, or redistribute this code or any derivative works without explicit written permission from the author.
 
-See the [LICENSE](https://github.com/Ryanrixx/TalentGate/blob/main/LICENSE) file for details.
+---
 
 ## 👤 Author
-
 ### Ryanrixx
+
 Founder-minded Full-Stack Developer
 
 GitHub: https://github.com/Ryanrixx
 
 Portfolio: https://ryanrixx.netlify.app
 
+---
+
 ## ✨ Vision
 
-TalentGate is being built as a real-world, scalable system — not a demo project.
+TalentGate is being built as a real-world scalable system — not a demo project.
 The goal is to ship features incrementally, test them end-to-end, and grow the platform with production discipline.
-
 
 ---
 
-🔒 This repository contains the private production code.
-A public technical showcase is available here:
+## 🔒 This repository contains the private production code.
+
+ A public technical showcase is available here:
+ 
 👉 https://github.com/Ryanrixx/TalentGate-Showcase
+
+---
 
 ---
