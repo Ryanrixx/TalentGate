@@ -6,6 +6,11 @@ import EmployerDashboard from "./pages/EmployerDashboard.tsx";
 import JobseekerDashboard from "./pages/JobSeekerDashboard.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Jobs from "./pages/Jobs";
+import Trending from "./pages/Trending";
+import Communities from "./pages/Communities";
+import Posts from "./pages/Posts";
+import JobSeekerProfile from "./pages/JobSeekerProfile";
+import EmployerProfile from "./pages/EmployerProfile";
 
 export default function App() {
     return (
@@ -33,6 +38,29 @@ export default function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route path="/jobs" element={<Jobs />} />
+                <Route path="/trending" element={<Trending />} />
+                <Route path="/communities" element={<Communities />} />
+                <Route path="/posts" element={<Posts />} />
+
+                <Route
+                    path="/jobseeker/profile"
+                    element={
+                        <ProtectedRoute role="jobseeker">
+                            <JobSeekerProfile />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/employer/profile"
+                    element={
+                        <ProtectedRoute role="employer">
+                            <EmployerProfile />
+                        </ProtectedRoute>
+                    }
+                />
+
             </Routes>
         </BrowserRouter>
     );
