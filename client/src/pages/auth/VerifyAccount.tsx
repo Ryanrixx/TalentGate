@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Card } from "../../components/ui/Card";
 import { Input } from "../../components/ui/Input";
 import { Button } from "../../components/ui/Button";
+import { Badge } from "../../components/ui/Badge";
 import { api } from "../../services/api";
 import { useAuth } from "../../store/auth.store";
 
@@ -14,6 +15,7 @@ export function VerifyAccount() {
     const [age, setAge] = useState<number>(18);
     const [email, setEmail] = useState(user?.email || "");
     const [phone, setPhone] = useState("");
+
     const [err, setErr] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
 
@@ -22,15 +24,20 @@ export function VerifyAccount() {
     return (
         <div className="mx-auto max-w-md">
             <Card className="space-y-4">
-                <div>
-                    <h1 className="text-xl font-semibold">Verify your account</h1>
-                    <p className="text-sm text-zinc-500">
-                        Unverified users are <span className="text-zinc-200">read-only</span>. Verify to post/apply.
-                    </p>
+                <div className="flex items-start justify-between gap-3">
+                    <div>
+                        <h1 className="text-xl font-semibold">Verify account</h1>
+                        <p className="mt-1 text-sm text-zinc-500">
+                            Verification unlocks posting/applying + interactions.
+                        </p>
+                    </div>
+                    <Badge className="text-amber-200 border-amber-900 bg-amber-950/30">
+                        read-only
+                    </Badge>
                 </div>
 
                 {err && (
-                    <div className="rounded-xl border border-red-900 bg-red-950 px-3 py-2 text-sm text-red-200">
+                    <div className="rounded-xl border border-red-900 bg-red-950/40 px-3 py-2 text-sm text-red-200">
                         {err}
                     </div>
                 )}
@@ -49,10 +56,10 @@ export function VerifyAccount() {
                         try {
                             setLoading(true);
                             setErr(null);
-                            const out = await api<{ token: string; user: any }>("/verification/submit", {
-                                method: "POST",
-                                body: JSON.stringify({ name, age, email, phone }),
-                            });
+                            const out = await api<{ token: string; user: any }>(
+                                "/verification/submit",
+                                { method: "POST", body: JSON.stringify({ name, age, email, phone }) }
+                            );
                             setAuth(out.token, out.user);
                             nav("/feed");
                         } catch (e: any) {
@@ -64,6 +71,10 @@ export function VerifyAccount() {
                 >
                     {loading ? "Submitting..." : "Submit verification"}
                 </Button>
+
+                <p className="text-xs text-zinc-600">
+                    Later: OTP/email verification + one account per person/company.
+                </p>
             </Card>
         </div>
     );
