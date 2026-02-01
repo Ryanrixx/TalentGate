@@ -5,8 +5,8 @@ import { RequireAuth } from "./RequireAuth";
 import { RequireVerified } from "./RequireVerified";
 import { RequireRole } from "./RequireRole";
 
-import { SignIn } from "../pages/auth/SignIn";
-import { CreateAccount } from "../pages/auth/CreateAccount";
+import SignIn from "../pages/auth/SignIn";
+import CreateAccount from "../pages/auth/CreateAccount";
 import { VerifyAccount } from "../pages/auth/VerifyAccount";
 
 import { Feed } from "../pages/shared/Feed";
