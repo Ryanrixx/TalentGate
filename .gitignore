@@ -16,9 +16,6 @@ coverage/
 .DS_Store
 Thumbs.db
 
-.ideas/
-*.log
-
 .cache/
 .tmp/
 temp/
@@ -30,5 +27,25 @@ private/
 .DS_Store
 node_modules/
 dist/
+.env
+.env.*
+
+# OS / Editor
+.DS_Store
+.idea/
+.vscode/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node
+node_modules/
+dist/
+build/
+coverage/
+
+# Env
 .env
 .env.*
