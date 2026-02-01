@@ -1,11 +1,18 @@
 import React, { createContext, useContext, useMemo, useState } from "react";
-import type { UserDTO } from "../types";
+import type { UserDTO, UserRole } from "../types";
+import * as authSvc from "../services/auth.service";
 
 type AuthContextValue = {
     token: string | null;
     user: UserDTO | null;
-    setAuth: (token: string, user: UserDTO) => void;
+
+    // actions
+    login: (email: string, password: string) => Promise<void>;
+    register: (email: string, password: string, role: UserRole) => Promise<void>;
+    refreshMe: () => Promise<void>;
+
     logout: () => void;
+    setAuth: (token: string, user: UserDTO) => void;
 };
 
 const AuthCtx = createContext<AuthContextValue | null>(null);
@@ -17,26 +24,49 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [token, setToken] = useState<string | null>(() =>
         localStorage.getItem(TOKEN_KEY)
     );
+
     const [user, setUser] = useState<UserDTO | null>(() => {
         const raw = localStorage.getItem(USER_KEY);
         return raw ? (JSON.parse(raw) as UserDTO) : null;
     });
 
+    const setAuth = (t: string, u: UserDTO) => {
+        localStorage.setItem(TOKEN_KEY, t);
+        localStorage.setItem(USER_KEY, JSON.stringify(u));
+        setToken(t);
+        setUser(u);
+    };
+
+    const logout = () => {
+        localStorage.removeItem(TOKEN_KEY);
+        localStorage.removeItem(USER_KEY);
+        setToken(null);
+        setUser(null);
+    };
+
     const value = useMemo<AuthContextValue>(
         () => ({
             token,
             user,
-            setAuth: (t, u) => {
-                localStorage.setItem(TOKEN_KEY, t);
-                localStorage.setItem(USER_KEY, JSON.stringify(u));
-                setToken(t);
-                setUser(u);
+            setAuth,
+            logout,
+
+            login: async (email: string, password: string) => {
+                const out = await authSvc.login(email, password);
+                setAuth(out.token, out.user);
             },
-            logout: () => {
-                localStorage.removeItem(TOKEN_KEY);
-                localStorage.removeItem(USER_KEY);
-                setToken(null);
-                setUser(null);
+
+            register: async (email: string, password: string, role: UserRole) => {
+                const out = await authSvc.register(email, password, role);
+                setAuth(out.token, out.user);
+            },
+
+            refreshMe: async () => {
+                if (!localStorage.getItem(TOKEN_KEY)) return;
+                const out = await authSvc.me();
+                // keep existing token, just update user
+                const t = localStorage.getItem(TOKEN_KEY)!;
+                setAuth(t, out.user);
             },
         }),
         [token, user]

@@ -1,10 +1,12 @@
 export type UserRole = "jobseeker" | "employer";
 
 export type UserDTO = {
+    name: string;
     id: string;
     email: string;
     role: UserRole;
     verified: boolean;
+    avatarUrl?: string;
 };
 
 export type JobDTO = {
