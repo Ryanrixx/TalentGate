@@ -1,4 +1,4 @@
-import { Job } from "../models/Job.model";
+import { Job } from "../models/job.model";
 import { Application } from "../models/Application.model";
 
 export async function listJobs() {

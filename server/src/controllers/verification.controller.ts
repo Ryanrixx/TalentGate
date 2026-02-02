@@ -3,6 +3,12 @@ import { User } from "../models/User.model";
 import { signToken } from "../utils/jwt";
 import type { AuthedRequest } from "../middlewares/auth.middleware";
 
+function displayName(user: any) {
+    const n = user?.verification?.name;
+    if (n) return n;
+    return String(user.email || "User").split("@")[0];
+}
+
 export async function submitVerificationController(req: AuthedRequest, res: Response) {
     try {
         const { name, age, email, phone } = req.body;
@@ -18,7 +24,15 @@ export async function submitVerificationController(req: AuthedRequest, res: Resp
 
         return res.json({
             token,
-            user: { id: String(user._id), email: user.email, role: user.role, verified: true },
+            user: {
+                id: String(user._id),
+                name: displayName(user),
+                email: user.email,
+                role: user.role,
+                verified: true,
+                avatarUrl: user.avatarUrl || "",
+                bannerUrl: user.bannerUrl || "",
+            },
         });
     } catch (e: any) {
         return res.status(400).json({ message: e.message || "Verification failed" });

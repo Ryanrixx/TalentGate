@@ -1,243 +1,148 @@
 import React from "react";
 
-type Props = { className?: string };
+type SvgProps = {
+    className?: string;
+};
 
-export function IconSearch({ className = "h-4 w-4" }: Props) {
+function Svg({ children, className = "" }: React.PropsWithChildren<SvgProps>) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
-            <path
-                d="M16.2 16.2 21 21"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
+        <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            className={"h-5 w-5 " + className}
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+        >
+            {children}
         </svg>
     );
 }
 
-export function IconFeed({ className = "h-5 w-5" }: Props) {
+// Top / nav icons
+export function IconSearch(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M4 10.5V20h16v-9.5l-8-6-8 6Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M9.5 20v-6h5v6"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" />
+            <path d="M16.6 16.6 21 21" />
+        </Svg>
     );
 }
 
-export function IconTrending({ className = "h-5 w-5" }: Props) {
+export function IconBell(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M4 16l6-6 4 4 6-8"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M20 6v6h-6"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 7h18s-3 0-3-7Z" />
+            <path d="M10 19a2 2 0 0 0 4 0" />
+        </Svg>
     );
 }
 
-export function IconCommunities({ className = "h-5 w-5" }: Props) {
+export function IconMessage(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M16.5 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
-            <path
-                d="M7.5 11a3 3 0 1 0-3-3 3 3 0 0 0 3 3Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
-            <path
-                d="M4 20a5.5 5.5 0 0 1 7-5.2"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-            <path
-                d="M13 20a5.5 5.5 0 0 1 7-5.2"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M21 14a4 4 0 0 1-4 4H9l-4 3V6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8Z" />
+        </Svg>
     );
 }
 
-export function IconDashboard({ className = "h-5 w-5" }: Props) {
+// Sidebar/nav section icons
+export function IconFeed(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M4 4h7v7H4V4Zm9 0h7v4h-7V4ZM13 10h7v10h-7V10ZM4 13h7v7H4v-7Z"
-                stroke="currentColor"
-                strokeWidth="1.6"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M4 4h16v16H4z" />
+            <path d="M8 8h8" />
+            <path d="M8 12h8" />
+            <path d="M8 16h5" />
+        </Svg>
     );
 }
 
-export function IconJobs({ className = "h-5 w-5" }: Props) {
+export function IconTrending(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M9 6V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v1"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-            <path
-                d="M4 8h16v12H4V8Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M4 12h16"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M3 17l6-6 4 4 7-7" />
+            <path d="M14 8h6v6" />
+        </Svg>
     );
 }
 
-export function IconApplications({ className = "h-5 w-5" }: Props) {
+export function IconCommunities(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M7 3h10v18H7V3Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M9 7h6M9 11h6M9 15h4"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M16 11a4 4 0 1 0-8 0" />
+            <path d="M4 21a8 8 0 0 1 16 0" />
+            <path d="M18.5 8.5a3 3 0 1 1 0 5.5" />
+        </Svg>
     );
 }
 
-export function IconProfile({ className = "h-5 w-5" }: Props) {
+export function IconDashboard(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
-            <path
-                d="M4 21a8 8 0 0 1 16 0"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M4 13h7V4H4v9Z" />
+            <path d="M13 20h7V11h-7v9Z" />
+            <path d="M13 4h7v5h-7V4Z" />
+            <path d="M4 20h7v-5H4v5Z" />
+        </Svg>
     );
 }
 
-export function IconHeart({ className = "h-4 w-4" }: Props) {
+export function IconJobs(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M12 21s-7-4.4-9.2-9A5.4 5.4 0 0 1 12 6a5.4 5.4 0 0 1 9.2 6c-2.2 4.6-9.2 9-9.2 9Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M8 7V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1" />
+            <path d="M4 7h16v13H4V7Z" />
+            <path d="M9 11h6" />
+        </Svg>
     );
 }
 
-export function IconComment({ className = "h-4 w-4" }: Props) {
+export function IconApplications(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M20 15a4 4 0 0 1-4 4H8l-4 3V7a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M7 3h10v4H7V3Z" />
+            <path d="M6 7h12v14H6V7Z" />
+            <path d="M9 11h6" />
+            <path d="M9 15h6" />
+        </Svg>
     );
 }
 
-export function IconRepost({ className = "h-4 w-4" }: Props) {
+export function IconProfile(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M7 7h11l-2.5-2.5"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M17 17H6l2.5 2.5"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-            <path
-                d="M6 7v4a3 3 0 0 0 3 3h2"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-            <path
-                d="M18 17v-4a3 3 0 0 0-3-3h-2"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M12 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Z" />
+            <path d="M4 21a8 8 0 0 1 16 0" />
+        </Svg>
     );
 }
 
-export function IconVerified({ className = "h-4 w-4" }: Props) {
+// Post action icons (fixes your Feed.tsx TS2305)
+export function IconHeart(p: SvgProps) {
     return (
-        <svg className={className} viewBox="0 0 24 24" fill="none">
-            <path
-                d="M12 21a9 9 0 1 0-9-9 9 9 0 0 0 9 9Z"
-                stroke="currentColor"
-                strokeWidth="1.8"
-            />
-            <path
-                d="M8.3 12.2 10.6 14.5 15.8 9.3"
-                stroke="currentColor"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-            />
-        </svg>
+        <Svg {...p}>
+            <path d="M12 21s-7-4.6-9.2-9A5.6 5.6 0 0 1 12 6.2 5.6 5.6 0 0 1 21.2 12C19 16.4 12 21 12 21Z" />
+        </Svg>
+    );
+}
+
+export function IconComment(p: SvgProps) {
+    return (
+        <Svg {...p}>
+            <path d="M21 14a4 4 0 0 1-4 4H9l-4 3V6a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v8Z" />
+        </Svg>
+    );
+}
+
+export function IconRepost(p: SvgProps) {
+    return (
+        <Svg {...p}>
+            <path d="M7 7h11l-2-2" />
+            <path d="M18 7a5 5 0 0 1-5 5H6" />
+            <path d="M17 17H6l2 2" />
+            <path d="M6 17a5 5 0 0 1 5-5h7" />
+        </Svg>
     );
 }

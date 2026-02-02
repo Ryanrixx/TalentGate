@@ -6,15 +6,18 @@ import { getDemoMode, setDemoMode } from "../../utils/demo";
 import { Input } from "../ui/Input";
 import {
     IconApplications,
+    IconBell,
     IconCommunities,
     IconDashboard,
     IconFeed,
     IconJobs,
+    IconMessage,
     IconProfile,
     IconSearch,
     IconTrending,
 } from "../ui/Icons";
 import { VerifiedBadge } from "../ui/VerifiedBadge";
+import { getNotificationSummary } from "../../services/notifications.service";
 
 function IconItem({
                       to,
@@ -41,6 +44,33 @@ function IconItem({
     );
 }
 
+function IconBtn({
+                     title,
+                     icon,
+                     count,
+                     onClick,
+                 }: {
+    title: string;
+    icon: React.ReactNode;
+    count?: number;
+    onClick: () => void;
+}) {
+    return (
+        <button
+            title={title}
+            onClick={onClick}
+            className="relative grid h-10 w-10 place-items-center rounded-xl text-zinc-300 hover:bg-zinc-900 hover:text-zinc-100"
+        >
+            {icon}
+            {count && count > 0 ? (
+                <span className="absolute -right-1 -top-1 grid h-5 min-w-[20px] place-items-center rounded-full bg-zinc-100 px-1 text-[11px] font-semibold text-zinc-900">
+          {count > 99 ? "99+" : count}
+        </span>
+            ) : null}
+        </button>
+    );
+}
+
 export function AppNav() {
     const nav = useNavigate();
     const loc = useLocation();
@@ -48,11 +78,48 @@ export function AppNav() {
 
     const [demo, setDemo] = useState(getDemoMode());
     const [q, setQ] = useState("");
+    const [notifCount, setNotifCount] = useState(0);
+    const [msgCount, setMsgCount] = useState(0);
 
     useEffect(() => {
         setDemoMode(demo);
         window.dispatchEvent(new Event("storage"));
     }, [demo]);
+
+    useEffect(() => {
+        const params = new URLSearchParams(loc.search);
+        setQ(params.get("q") || "");
+    }, [loc.search]);
+
+    useEffect(() => {
+        let alive = true;
+
+        async function run() {
+            if (!user) return;
+
+            if (demo) {
+                setMsgCount(3);
+                setNotifCount(9);
+                return;
+            }
+
+            try {
+                const out = await getNotificationSummary();
+                if (!alive) return;
+                setMsgCount(out.unreadMessages);
+                setNotifCount(out.totalUnread);
+            } catch {
+                // ignore
+            }
+        }
+
+        run();
+        const id = window.setInterval(run, 6000);
+        return () => {
+            alive = false;
+            window.clearInterval(id);
+        };
+    }, [user, demo]);
 
     const profilePath =
         user?.role === "jobseeker"
@@ -91,11 +158,6 @@ export function AppNav() {
         if (!s) return;
         nav(`/feed?q=${encodeURIComponent(s)}`);
     }
-
-    useEffect(() => {
-        const params = new URLSearchParams(loc.search);
-        setQ(params.get("q") || "");
-    }, [loc.search]);
 
     const avatarLetter = (user?.name || user?.email || "T").slice(0, 1).toUpperCase();
     const avatarUrl = (user as any)?.avatarUrl as string | undefined;
@@ -142,12 +204,19 @@ export function AppNav() {
                 </nav>
 
                 {/* Right controls */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2">
                     <Toggle checked={demo} onChange={setDemo} label="Demo" />
+
+                    {user?.verified ? (
+                        <>
+                            <IconBtn title="Messages" icon={<IconMessage />} count={msgCount} onClick={() => nav("/messages")} />
+                            <IconBtn title="Notifications" icon={<IconBell />} count={notifCount} onClick={() => nav("/notifications")} />
+                        </>
+                    ) : null}
 
                     {user ? (
                         <>
-                            {/* Avatar (image if exists) */}
+                            {/* Avatar */}
                             <button
                                 onClick={() => nav(profilePath)}
                                 title="Profile"
@@ -172,7 +241,7 @@ export function AppNav() {
                                     logout();
                                     nav("/auth/sign-in");
                                 }}
-                                className="rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-900"
+                                className="ml-1 rounded-xl border border-zinc-800 bg-zinc-950 px-3 py-2 text-sm text-zinc-200 hover:bg-zinc-900"
                             >
                                 Logout
                             </button>
