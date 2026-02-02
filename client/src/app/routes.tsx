@@ -12,11 +12,14 @@ import { VerifyAccount } from "../pages/auth/VerifyAccount";
 import { Feed } from "../pages/shared/Feed";
 import { Trending } from "../pages/shared/Trending";
 import { Communities } from "../pages/shared/Communities";
+import { Messages } from "../pages/shared/Messages";
+import { Notifications } from "../pages/shared/Notifications";
 
 import { SeekerDashboard } from "../pages/jobseeker/Dashboard";
 import { SeekerProfile } from "../pages/jobseeker/Profile";
 import { SeekerJobs } from "../pages/jobseeker/Jobs";
 import { SeekerApplications } from "../pages/jobseeker/Applications";
+import { SeekerResume } from "../pages/jobseeker/Resume";
 
 import { EmployerDashboard } from "../pages/employer/Dashboard";
 import { EmployerProfile } from "../pages/employer/Profile";
@@ -42,10 +45,28 @@ export const router = createBrowserRouter([
                 ),
             },
 
-            // shared (available even if unverified; guests can browse too)
+            // shared (browse allowed)
             { path: "feed", element: <Feed /> },
             { path: "trending", element: <Trending /> },
             { path: "communities", element: <Communities /> },
+
+            // NEW shared
+            {
+                path: "messages",
+                element: (
+                    <RequireAuth>
+                        <Messages />
+                    </RequireAuth>
+                ),
+            },
+            {
+                path: "notifications",
+                element: (
+                    <RequireAuth>
+                        <Notifications />
+                    </RequireAuth>
+                ),
+            },
 
             // jobseeker
             {
@@ -67,6 +88,18 @@ export const router = createBrowserRouter([
                         <RequireVerified>
                             <RequireRole role="jobseeker">
                                 <SeekerProfile />
+                            </RequireRole>
+                        </RequireVerified>
+                    </RequireAuth>
+                ),
+            },
+            {
+                path: "jobseeker/resume",
+                element: (
+                    <RequireAuth>
+                        <RequireVerified>
+                            <RequireRole role="jobseeker">
+                                <SeekerResume />
                             </RequireRole>
                         </RequireVerified>
                     </RequireAuth>
