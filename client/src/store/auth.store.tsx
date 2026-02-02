@@ -6,10 +6,12 @@ type AuthContextValue = {
     token: string | null;
     user: UserDTO | null;
 
-    // actions
     login: (email: string, password: string) => Promise<void>;
     register: (email: string, password: string, role: UserRole) => Promise<void>;
     refreshMe: () => Promise<void>;
+
+    // ✅ NEW
+    updateUser: (patch: Partial<UserDTO>) => void;
 
     logout: () => void;
     setAuth: (token: string, user: UserDTO) => void;
@@ -37,6 +39,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         setUser(u);
     };
 
+    const updateUser = (patch: Partial<UserDTO>) => {
+        setUser((prev) => {
+            if (!prev) return prev;
+            const next = { ...prev, ...patch };
+            localStorage.setItem(USER_KEY, JSON.stringify(next));
+            return next;
+        });
+    };
+
     const logout = () => {
         localStorage.removeItem(TOKEN_KEY);
         localStorage.removeItem(USER_KEY);
@@ -49,6 +60,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             token,
             user,
             setAuth,
+            updateUser,
             logout,
 
             login: async (email: string, password: string) => {
@@ -64,7 +76,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             refreshMe: async () => {
                 if (!localStorage.getItem(TOKEN_KEY)) return;
                 const out = await authSvc.me();
-                // keep existing token, just update user
                 const t = localStorage.getItem(TOKEN_KEY)!;
                 setAuth(t, out.user);
             },

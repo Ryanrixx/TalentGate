@@ -2,21 +2,25 @@ import mongoose from "mongoose";
 
 const VerificationSchema = new mongoose.Schema(
     {
-        name: String,
-        age: Number,
-        email: String,
-        phone: String,
+            name: String,
+            age: Number,
+            email: String,
+            phone: String,
     },
     { _id: false }
 );
 
 const UserSchema = new mongoose.Schema(
     {
-        email: { type: String, required: true, unique: true, lowercase: true, trim: true },
-        passwordHash: { type: String, required: true },
-        role: { type: String, enum: ["jobseeker", "employer"], required: true },
-        verified: { type: Boolean, default: false },
-        verification: { type: VerificationSchema, default: {} },
+            email: { type: String, required: true, unique: true, lowercase: true, trim: true },
+            passwordHash: { type: String, required: true },
+            role: { type: String, enum: ["jobseeker", "employer"], required: true },
+            verified: { type: Boolean, default: false },
+            verification: { type: VerificationSchema, default: {} },
+
+            // profile media
+            avatarUrl: { type: String, default: "" },
+            bannerUrl: { type: String, default: "" },
     },
     { timestamps: true }
 );
