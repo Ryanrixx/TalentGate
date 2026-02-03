@@ -10,7 +10,7 @@ The goal: **reduce application friction**, **speed up hiring decisions**, and in
 
 🟢 **Actively in development**
 
-### ✅ Completed milestones
+### ✅ Completed milestones:
 - JWT-based authentication (signup / login)
 - Role-based access (Job Seeker / Employer)
 - Protected routes & dashboards
@@ -19,7 +19,7 @@ The goal: **reduce application friction**, **speed up hiring decisions**, and in
 - API health checks & structured routing
 - **Verification gate (read-only until verified)** *(core platform rule)*
 
-### 🎯 Next milestones
+### 🎯 Next milestones:
 - Jobs API (CRUD)
 - Job listings page
 - Apply-to-job workflow
@@ -28,7 +28,7 @@ The goal: **reduce application friction**, **speed up hiring decisions**, and in
 
 ---
 
-## 🧠 Core Concepts
+## 🧠 Core Concepts:
 
 ### 1) One Living Profile (Job Seekers)
 - Identity, resume, and application data stored once
@@ -58,7 +58,7 @@ Future goal: **one account per person/company**
 
 ---
 
-## 🛠 Tech Stack
+## 🛠 Tech Stack:
 
 ### Frontend
 - React + TypeScript
@@ -78,7 +78,7 @@ Future goal: **one account per person/company**
 
 ---
 
-## 🔐 Authentication Overview
+## 🔐 Authentication Overview:
 - JWT-based authentication
 - Tokens stored client-side
 - Role-based route protection
@@ -87,13 +87,13 @@ Future goal: **one account per person/company**
 
 ---
 
-## 📦 Local Setup
+## 📦 Local Setup:
 
-### Prerequisites
+### Prerequisites:
 - Node.js (v18+ recommended)
 - MongoDB (local or Atlas)
 
-### Backend
+### Backend:
 ```
 cd server
 npm install
@@ -137,7 +137,7 @@ The goal is to ship features incrementally, test them end-to-end, and grow the p
 
 ---
 
-## 🔒 This repository contains the private production code.
+## 🔒 This repository contains the private production code..
 
  A public technical showcase is available here:
  
