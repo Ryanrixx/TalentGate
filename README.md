@@ -137,12 +137,4 @@ The goal is to ship features incrementally, test them end-to-end, and grow the p
 
 ---
 
-## 🔒 This repository contains the private production code..
 
- A public technical showcase is available here:
- 
-👉 https://github.com/Ryanrixx/TalentGate-Showcase
-
----
-
----
